@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.IdentityModel.Tokens.Jwt;
+using Microsoft.IdentityModel.Logging;
 
 namespace mvc
 {
@@ -23,6 +24,7 @@ namespace mvc
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            IdentityModelEventSource.ShowPII = true;
             services.AddControllersWithViews();
 
             JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
@@ -40,7 +42,7 @@ namespace mvc
         options.ClientId = "mvc";
         options.ClientSecret = "secret";
         options.ResponseType = "code";
-        
+
 
         options.SaveTokens = true;
 

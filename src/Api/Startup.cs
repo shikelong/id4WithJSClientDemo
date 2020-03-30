@@ -25,6 +25,18 @@ namespace Api
                     options.RequireHttpsMetadata = false;
                     options.Audience = "api1";
                 });
+
+            //Allow cors request from js client
+            services.AddCors(options =>
+            {
+                options.AddPolicy("default", policy =>
+                {
+                    policy.WithOrigins("http://localhost:8003")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+                });
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -36,6 +48,9 @@ namespace Api
             }
 
             app.UseRouting();
+
+            app.UseCors("default");
+
             app.UseAuthentication();
             app.UseAuthorization();
 
